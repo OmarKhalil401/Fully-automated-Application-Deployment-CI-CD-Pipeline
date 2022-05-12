@@ -18,7 +18,7 @@ Through this project, you will be able to Build, Test, and scan the application 
 
 ## Project Roadmap
 
-The whole Project's steps are written inside [.circleci folder.](/.circleci/README.md)
+The whole Project's steps are written inside the [.circleci folder.](/.circleci)
 
 <HR>
 
