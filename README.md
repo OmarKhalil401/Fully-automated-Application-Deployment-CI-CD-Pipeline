@@ -9,6 +9,8 @@ Through this project, you will be able to Build, Test, and scan the application 
 * Deploy application Backend Code on EC2 and open PM2 server on port 3030 using Ansible.
 * Smoke Test the whole deployment process to ensure the application is working as intended.
 * Promote the application on CloudFront CDN utilizing (Blue/Green) Deployment Strategy.
+* Monitor the provisioned EC2 server using a Promethues server and node exporter.
+* Sending Alarms by Email based on set of rules and using Promethues Alert Manager.
 
 **Take a closer look at the Whole CI/CD piepleine steps :** 
 
