@@ -1,0 +1,3 @@
+URL 1 (Github Public Repo) = https://github.com/OmarKhalil401/cdond-c3
+
+URL 2 (Public URL for S3 Bucket) = http://udapeople-8017e16.s3-website-us-west-2.amazonaws.com
