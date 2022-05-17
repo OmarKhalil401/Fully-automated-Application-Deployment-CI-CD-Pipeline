@@ -8,7 +8,7 @@ commands:
   notify_on_failure:
     steps:
       - slack/notify:
-          channel: C03ES8F89DW ## This is my Slack Channel in which notifications are sent, change this Value to what fit your requirments ## 
+          channel: C03ES8F89DW 
           event: fail
           template: basic_fail_1
 
@@ -175,7 +175,7 @@ jobs:
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
       - notify_on_failure
-      
+
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
@@ -248,14 +248,14 @@ jobs:
               cd backend
               npm i
               npm run build
-              npm run migrations >> migrations_output.txt 
+              npm run migrations >> migrations_output.txt
       - run:
           name: Send migration results to Kvdb.io
           command: |
             cd backend
             if grep -q "No migrations are pending" migrations_output.txt
             then
-              curl -d '1' https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7} 
+              curl -d '1' https://kvdb.io/${KVDB_BUCKET}/migration_${CIRCLE_WORKFLOW_ID:0:7}
             fi
       - destroy-environment
       - revert-migrations
@@ -294,7 +294,7 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       - revert-migrations
-                    
+
   deploy-backend:
     docker:
       - image: cimg/base:2022.04
@@ -381,9 +381,9 @@ jobs:
       - run:
           name: Saving the old WorkflowID to KVDB bucket
           command: |
-            export OldWorkflowID="$(aws cloudformation \
-              list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
-              --no-paginate --output text)"
+            export  OldWorkflowID="$(aws cloudformation \
+                    list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
+                    --no-paginate --output text)"
 
             echo "The Old WorkFlow ID is: $OldWorkflowID"
             
@@ -442,46 +442,46 @@ workflows:
   application_workflow:
     jobs:
       - build-frontend
-        - build-backend
-      - test-frontend:
-          requires: [build-frontend]
-      - test-backend:
-          requires: [build-backend]
-      - scan-backend:
-          requires: [build-backend]
-      - scan-frontend:
-          requires: [build-frontend]
-      - deploy-infrastructure:
-           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
-           filters:
-            branches:
-              only: [master]
-      - configure-infrastructure:
-          requires: [deploy-infrastructure]
-      - run-migrations:
-          requires: [configure-infrastructure]
-      - deploy-frontend:
-          requires: [run-migrations]
-      - deploy-backend:
-          requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
-      - cloudfront-update:
-          requires: [smoke-test]
-      - cleanup:
-          requires: [cloudfront-update]
+      #   - build-backend
+      # - test-frontend:
+      #     requires: [build-frontend]
+      # - test-backend:
+      #     requires: [build-backend]
+      # - scan-backend:
+      #     requires: [build-backend]
+      # - scan-frontend:
+      #     requires: [build-frontend]
+      # - deploy-infrastructure:
+      #      requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+      #      filters:
+      #       branches:
+      #         only: [master]
+      # - configure-infrastructure:
+      #     requires: [deploy-infrastructure]
+      # - run-migrations:
+      #     requires: [configure-infrastructure]
+      # - deploy-frontend:
+      #     requires: [run-migrations]
+      # - deploy-backend:
+      #     requires: [run-migrations]
+      # - smoke-test:
+      #     requires: [deploy-backend, deploy-frontend]
+      # - cloudfront-update:
+      #     requires: [smoke-test]
+      # - cleanup:
+      #     requires: [cloudfront-update]
       - notify_on_success:
           requires: 
             - build-frontend
-            - build-backend
-            - test-frontend
-            - test-backend
-            - scan-backend
-            - scan-frontend
-            - deploy-infrastructure
-            - run-migrations
-            - deploy-frontend
-            - deploy-backend
-            - smoke-test
-            - cloudfront-update
-            - cleanup
+            # - build-backend
+            # - test-frontend
+            # - test-backend
+            # - scan-backend
+            # - scan-frontend
+            # - deploy-infrastructure
+            # - run-migrations
+            # - deploy-frontend
+            # - deploy-backend
+            # - smoke-test
+            # - cloudfront-update
+            # - cleanup
